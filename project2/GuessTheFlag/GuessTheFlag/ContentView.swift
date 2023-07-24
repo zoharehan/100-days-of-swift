@@ -12,6 +12,14 @@
  
 import SwiftUI
 
+struct FlagImage: View {
+    var imgName: String
+    var body: some View {
+        Image(imgName)
+            .renderingMode(.original).clipShape(Capsule())
+    }
+}
+
 struct ContentView: View {
     //  we need two properties to store our game data: an array of all the country images we want to show in the game, plus an integer storing which country image is correct.
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
@@ -35,7 +43,7 @@ struct ContentView: View {
     var body: some View {
         // we are using this to add a background colour.
         ZStack {
-                        LinearGradient(gradient: Gradient(colors: [.blue, .black]), startPoint: .top, endPoint: .bottom)
+            LinearGradient(gradient: Gradient(colors: [.blue, .black]), startPoint: .top, endPoint: .bottom)
                             .ignoresSafeArea()
 //            RadialGradient(stops: [
 //                .init(color: Color(red: 0.1, green: 0.2, blue: 0.45), location: 0.3),
@@ -63,14 +71,16 @@ struct ContentView: View {
                             flagTapped(number)
                             turnCount()
                         } label: {
-                            Image(countries[number])
-                                .renderingMode(.original)
+//                            project 3: added FlagImage view.
+//                            Image(countries[number])
+//                           .renderingMode(.original).clipShape(Capsule())
+                            FlagImage(imgName: countries[number])
                             // Button added asking if we want to continue and then resetting the game.
                         }.alert(scoreTitle, isPresented: $showingScore) {
                             Button("Continue", action: askQuestion)
                         } message: {
                             Text("Your score is \(score)")
-                        }.clipShape(Capsule()).shadow(radius: 5).alert("Game Over", isPresented: $showingFinalAlert) {
+                        }.shadow(radius: 5).alert("Game Over", isPresented: $showingFinalAlert) {
                             Button("Restart", action: resetGame)
                         } message: {
                             Text("Your final score is \(score)")

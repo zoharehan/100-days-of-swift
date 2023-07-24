@@ -92,6 +92,8 @@ struct ContentView: View {
                 
                 Section {
                     Text(grandTotal, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+//                    Challenge from project3: adding a conditional modifier to change the text colour to red if the user selects 0% tip.
+                        .foregroundColor(tipPercentage == 0 ? .red : .black)
                 } header: {
                     Text("Total with Tip")
                 }
